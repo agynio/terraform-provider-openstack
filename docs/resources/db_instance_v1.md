@@ -55,8 +55,7 @@ The following arguments are supported:
 
 * `size` - (Required) Specifies the volume size in GB. Changing this creates new instance.
 
-* `volume_type` - (Optional) Specifies the volume type to use. If you want to
-  specify a volume type, you must also specify a volume size. Changing this
+* `volume_type` - (Optional) Specifies the volume type to use. Changing this
   creates new instance.
 
 * `datastore` - (Required) An array of database engine type and version. The datastore
