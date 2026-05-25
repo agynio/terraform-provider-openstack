@@ -177,6 +177,52 @@ func TestUnitDatabaseInstanceV1CreateOptsToInstanceCreateMapModernNetworks(t *te
 	assert.Equal(t, expected, actual)
 }
 
+func TestUnitDatabaseInstanceV1CreateOptsToInstanceCreateMapWithVolumeType(t *testing.T) {
+	createOpts := databaseInstanceV1CreateOpts{
+		FlavorRef:  "flavor-id",
+		Name:       "db-instance",
+		Size:       10,
+		VolumeType: "ssd",
+	}
+
+	expected := map[string]any{
+		"instance": map[string]any{
+			"flavorRef": "flavor-id",
+			"name":      "db-instance",
+			"volume": map[string]any{
+				"size": 10,
+				"type": "ssd",
+			},
+		},
+	}
+
+	actual, err := createOpts.ToInstanceCreateMap()
+	require.NoError(t, err)
+	assert.Equal(t, expected, actual)
+}
+
+func TestUnitDatabaseInstanceV1CreateOptsToInstanceCreateMapWithoutVolumeType(t *testing.T) {
+	createOpts := databaseInstanceV1CreateOpts{
+		FlavorRef: "flavor-id",
+		Name:      "db-instance",
+		Size:      10,
+	}
+
+	expected := map[string]any{
+		"instance": map[string]any{
+			"flavorRef": "flavor-id",
+			"name":      "db-instance",
+			"volume": map[string]any{
+				"size": 10,
+			},
+		},
+	}
+
+	actual, err := createOpts.ToInstanceCreateMap()
+	require.NoError(t, err)
+	assert.Equal(t, expected, actual)
+}
+
 func TestUnitExpandDatabaseInstanceV1Databases(t *testing.T) {
 	dbs := []any{
 		map[string]any{
